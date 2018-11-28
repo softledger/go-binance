@@ -7,10 +7,11 @@ import (
 
 // ListTradesService list trades
 type ListTradesService struct {
-	c      *Client
-	symbol string
-	limit  *int
-	fromID *int64
+	c       *Client
+	symbol  string
+	limit   *int
+	fromID  *int64
+	endTime *int64
 }
 
 // Symbol set symbol
@@ -28,6 +29,12 @@ func (s *ListTradesService) Limit(limit int) *ListTradesService {
 // FromID set fromID
 func (s *ListTradesService) FromID(fromID int64) *ListTradesService {
 	s.fromID = &fromID
+	return s
+}
+
+// EndTime set endTime
+func (s *ListTradesService) EndTime(endTime int64) *ListTradesService {
+	s.endTime = &endTime
 	return s
 }
 
@@ -96,6 +103,9 @@ func (s *HistoricalTradesService) Do(ctx context.Context, opts ...RequestOption)
 	}
 	if s.fromID != nil {
 		r.setParam("fromId", *s.fromID)
+	}
+	if s.endTime != nil {
+		r.setParam("endTime", *s.endTime)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
