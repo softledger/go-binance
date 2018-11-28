@@ -52,6 +52,9 @@ func (s *ListTradesService) Do(ctx context.Context, opts ...RequestOption) (res 
 	if s.fromID != nil {
 		r.setParam("fromId", *s.fromID)
 	}
+	if s.endTime != nil {
+		r.setParam("endTime", *s.endTime)
+	}
 	data, err := s.c.callAPI(ctx, r, opts...)
 	if err != nil {
 		return []*TradeV3{}, err
@@ -103,9 +106,6 @@ func (s *HistoricalTradesService) Do(ctx context.Context, opts ...RequestOption)
 	}
 	if s.fromID != nil {
 		r.setParam("fromId", *s.fromID)
-	}
-	if s.endTime != nil {
-		r.setParam("endTime", *s.endTime)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
