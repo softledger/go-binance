@@ -130,13 +130,13 @@ type WithdrawHistoryResponse struct {
 
 // Withdraw define withdraw info
 type Withdraw struct {
-	Amount    float64 `json:"amount"`
-	Address   string  `json:"address"`
-	Tag	  string  `json:"tag"`
-	Asset     string  `json:"asset"`
-	TxID      string  `json:"txId"`
-	ApplyTime int64   `json:"applyTime"`
-	Status    int     `json:"status"`
+	Amount    	float64 `json:"amount"`
+	Address   	string  `json:"address"`
+	AddressTag	string  `json:"addressTag"`
+	Asset     	string  `json:"asset"`
+	TxID      	string  `json:"txId"`
+	ApplyTime 	int64   `json:"applyTime"`
+	Status    	int     `json:"status"`
 }
 
 // GetWithdrawFeeService get withdraw fee
