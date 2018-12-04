@@ -132,6 +132,7 @@ type WithdrawHistoryResponse struct {
 type Withdraw struct {
 	Amount    float64 `json:"amount"`
 	Address   string  `json:"address"`
+	Tag	  string  `json:"tag"`
 	Asset     string  `json:"asset"`
 	TxID      string  `json:"txId"`
 	ApplyTime int64   `json:"applyTime"`
