@@ -130,13 +130,13 @@ type WithdrawHistoryResponse struct {
 
 // Withdraw define withdraw info
 type Withdraw struct {
-	Amount    	float64 `json:"amount"`
-	Address   	string  `json:"address"`
-	AddressTag	string  `json:"addressTag"`
-	Asset     	string  `json:"asset"`
-	TxID      	string  `json:"txId"`
-	ApplyTime 	int64   `json:"applyTime"`
-	Status    	int     `json:"status"`
+	Amount     float64 `json:"amount"`
+	Address    string  `json:"address"`
+	AddressTag string  `json:"addressTag"`
+	Asset      string  `json:"asset"`
+	TxID       string  `json:"txId"`
+	ApplyTime  int64   `json:"applyTime"`
+	Status     int     `json:"status"`
 }
 
 // GetWithdrawFeeService get withdraw fee
@@ -174,4 +174,42 @@ func (s *GetWithdrawFeeService) Do(ctx context.Context, opts ...RequestOption) (
 // WithdrawFee withdraw fee
 type WithdrawFee struct {
 	Fee float64 `json:"withdrawFee"` // docs specify string value but api returns decimal
+}
+
+//asset detail
+type AssetDetail struct {
+	MinWithdrawAmount string `json:"minWithdrawAmount"`
+	DepositStatus     bool   `json:"depositStatus"`
+	WithdrawFee       bool   `json:"withdrawFee"`
+	WithdrawStatus    bool   `json:"withdrawStatus"`
+	DepositTip        bool   `json:"depositTip"`
+}
+
+type AssetDetailResponse struct {
+	AssetDetails []*AssetDetail `json:"assetDetail"`
+	Success      bool           `json:"success"`
+}
+
+// GetWithdrawFeeService get withdraw fee
+type GetAssetDetailService struct {
+	c *Client
+}
+
+// Do send request
+func (s *GetAssetDetailService) Do(ctx context.Context) (assetDetails []*AssetDetail, err error) {
+	r := &request{
+		method:   "GET",
+		endpoint: "/wapi/v3/assetDetail.html",
+		secType:  secTypeSigned,
+	}
+	data, err := s.c.callAPI(ctx, r)
+	if err != nil {
+		return
+	}
+	res := new(AssetDetailResponse)
+	err = json.Unmarshal(data, res)
+	if err != nil {
+		return
+	}
+	return res.AssetDetails, nil
 }
