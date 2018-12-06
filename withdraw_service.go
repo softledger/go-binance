@@ -178,11 +178,11 @@ type WithdrawFee struct {
 
 //asset detail
 type AssetDetail struct {
-	MinWithdrawAmount string `json:"minWithdrawAmount"`
-	DepositStatus     bool   `json:"depositStatus"`
-	WithdrawFee       bool   `json:"withdrawFee"`
-	WithdrawStatus    bool   `json:"withdrawStatus"`
-	DepositTip        bool   `json:"depositTip"`
+	MinWithdrawAmount string  `json:"minWithdrawAmount"`
+	DepositStatus     bool    `json:"depositStatus"`
+	WithdrawFee       float64 `json:"withdrawFee"`
+	WithdrawStatus    bool    `json:"withdrawStatus"`
+	DepositTip        string  `json:"depositTip"`
 }
 
 type AssetDetailResponse struct {
