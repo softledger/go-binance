@@ -128,3 +128,47 @@ func (s *withdrawServiceTestSuite) TestGetWithdrawFee() {
 	s.r().NoError(err)
 	s.r().Equal(res.Fee, 0.0005, "Fee")
 }
+
+func (s *withdrawServiceTestSuite) TestGetAssetDetail() {
+	data := []byte(`{
+    "success": true,
+    "assetDetail": {
+      "CTR": {
+        "minWithdrawAmount": "70.00000000",
+        "depositStatus": false,
+        "withdrawFee": 35,
+        "withdrawStatus": true,
+        "depositTip": "Delisted, Deposit Suspended"
+      },
+      "SKY": {
+        "minWithdrawAmount": "0.02000000",
+        "depositStatus": true,
+        "withdrawFee": 0.01,
+        "withdrawStatus": true
+      }	
+    }
+	}`)
+	s.mockDo(data, nil)
+	defer s.assertDo()
+
+	assetDetails, err := s.client.NewGetAssetDetailService().Do(newContext())
+	r := s.r()
+	r.NoError(err)
+	s.Len(assetDetails, 2)
+	e1 := &AssetDetail{
+		MinWithdrawAmount: "70.00000000",
+		DepositStatus:     false,
+		WithdrawFee:       35,
+		WithdrawStatus:    true,
+		DepositTip:        "Delisted, Deposit Suspended",
+	}
+	e2 := &AssetDetail{
+		MinWithdrawAmount: "0.02000000",
+		DepositStatus:     true,
+		WithdrawFee:       0.01,
+		WithdrawStatus:    true,
+		DepositTip:        "",
+	}
+	s.Equal(e1, assetDetails["CTR"])
+	s.Equal(e2, assetDetails["SKY"])
+}

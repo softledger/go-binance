@@ -182,12 +182,12 @@ type AssetDetail struct {
 	DepositStatus     bool    `json:"depositStatus"`
 	WithdrawFee       float64 `json:"withdrawFee"`
 	WithdrawStatus    bool    `json:"withdrawStatus"`
-	DepositTip        string  `json:"depositTip"`
+	DepositTip        string  `json:"depositTip,omitempty"`
 }
 
 type AssetDetailResponse struct {
-	AssetDetails []*AssetDetail `json:"assetDetail"`
-	Success      bool           `json:"success"`
+	AssetDetails map[string]*AssetDetail `json:"assetDetail"`
+	Success      bool                    `json:"success"`
 }
 
 // GetWithdrawFeeService get withdraw fee
@@ -196,7 +196,7 @@ type GetAssetDetailService struct {
 }
 
 // Do send request
-func (s *GetAssetDetailService) Do(ctx context.Context) (assetDetails []*AssetDetail, err error) {
+func (s *GetAssetDetailService) Do(ctx context.Context) (map[string]*AssetDetail, error) {
 	r := &request{
 		method:   "GET",
 		endpoint: "/wapi/v3/assetDetail.html",
@@ -204,12 +204,12 @@ func (s *GetAssetDetailService) Do(ctx context.Context) (assetDetails []*AssetDe
 	}
 	data, err := s.c.callAPI(ctx, r)
 	if err != nil {
-		return
+		return nil, err
 	}
 	res := new(AssetDetailResponse)
 	err = json.Unmarshal(data, res)
 	if err != nil {
-		return
+		return nil, err
 	}
 	return res.AssetDetails, nil
 }
