@@ -178,7 +178,8 @@ type WithdrawFee struct {
 
 //asset detail
 type AssetDetail struct {
-	MinWithdrawAmount string  `json:"minWithdrawAmount"`
+	//api docs says string, but returns number
+	MinWithdrawAmount float64 `json:"minWithdrawAmount"`
 	DepositStatus     bool    `json:"depositStatus"`
 	WithdrawFee       float64 `json:"withdrawFee"`
 	WithdrawStatus    bool    `json:"withdrawStatus"`
