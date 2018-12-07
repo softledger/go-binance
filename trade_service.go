@@ -32,6 +32,12 @@ func (s *ListTradesService) FromID(fromID int64) *ListTradesService {
 	return s
 }
 
+// StartTime set startTime
+func (s *ListTradesService) StartTime(startTime int64) *ListTradesService {
+	s.startTime = &startTime
+	return s
+}
+
 // EndTime set endTime
 func (s *ListTradesService) EndTime(endTime int64) *ListTradesService {
 	s.endTime = &endTime
@@ -51,6 +57,9 @@ func (s *ListTradesService) Do(ctx context.Context, opts ...RequestOption) (res 
 	}
 	if s.fromID != nil {
 		r.setParam("fromId", *s.fromID)
+	}
+	if s.startTime != nil {
+		r.setParam("startTime", *s.startTime)
 	}
 	if s.endTime != nil {
 		r.setParam("endTime", *s.endTime)
