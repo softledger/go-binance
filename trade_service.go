@@ -7,11 +7,12 @@ import (
 
 // ListTradesService list trades
 type ListTradesService struct {
-	c       *Client
-	symbol  string
-	limit   *int
-	fromID  *int64
-	endTime *int64
+	c         *Client
+	symbol    string
+	limit     *int
+	fromID    *int64
+	startTime *int64
+	endTime   *int64
 }
 
 // Symbol set symbol
