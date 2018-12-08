@@ -17,7 +17,7 @@ type ListDustConversionService struct {
 // Do send request
 func (s *ListDustConversionService) Do(ctx context.Context) ([]*DustConversion, error) {
 	r := &request{
-		method:   "POST",
+		method:   "GET",
 		endpoint: "/wapi/v3/userAssetDribbletLog.html",
 		secType:  secTypeSigned,
 	}
@@ -26,6 +26,7 @@ func (s *ListDustConversionService) Do(ctx context.Context) ([]*DustConversion, 
 		return nil, err
 	}
 	res := new(DustConversionResponse)
+	fmt.Println(res)
 	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
