@@ -3,7 +3,6 @@ package binance
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 )
 
 // ListWithdrawsService list withdraws
@@ -27,23 +26,11 @@ func (s *ListDustConversionService) Do(ctx context.Context) ([]*DustConversion, 
 		return nil, err
 	}
 	res := new(DustConversionResponse)
-	PrintJson(res)
 	err = json.Unmarshal(data, res)
 	if err != nil {
 		return nil, err
 	}
 	return res.Result.DustConversions, nil
-}
-
-/**
- * printJson is a helper func to print stuff as json
- */
-func PrintJson(r interface{}) {
-	b, err := json.MarshalIndent(r, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Print(string(b))
 }
 
 // WithdrawHistoryResponse define withdraw history response
