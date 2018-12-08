@@ -343,3 +343,8 @@ func (c *Client) NewGetWithdrawFeeService() *GetWithdrawFeeService {
 func (c *Client) NewGetAssetDetailService() *GetAssetDetailService {
 	return &GetAssetDetailService{c: c}
 }
+
+// NewListDustConversionService( init get asset detail service
+func (c *Client) NewListDustConversionService() *ListDustConversionService {
+	return &ListDustConversionService{c: c}
+}
